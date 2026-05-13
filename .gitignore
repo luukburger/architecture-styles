@@ -1,0 +1,13 @@
+# Python build artifacts
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# AWS SAM build artifacts
+.aws-sam/
+samconfig.toml
+
+# MacOS files
+.DS_Store

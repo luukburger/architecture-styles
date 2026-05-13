@@ -44,47 +44,67 @@ Open `http://localhost:8001/` in your browser.
 
 **Layered architecture**
 ```
-+------------+
-|   web.py   |
-+------------+
-      |
-      v
-+------------+
-|  service.py   |
-+------------+
-      |
-      v
-+------------+
-| repository.py |
-+------------+
++------------------------------+
+|        WEB UI (web.py)       |
++------------------------------+
+               |
+               v
++------------------------------+
+|     SERVICE (service.py)     |
++------------------------------+
+               |
+               v
++------------------------------+
+|  REPOSITORY (repository.py)  |
++------------------------------+
 ```
 
-hexagonal architecture
+**Hexagonal architecture**
 ```
-+-----------------------------------------------+
-| WEB UI (web_adapter.py)                                |
-| input adapter calling the input port          |
-+-----------------------------------------------+
-      |
-      v
-+-----------------------------------------------+
-| INPUT PORT (ports.py)                                  |
-+-----------------------------------------------+
-      |
-      v
-+-----------------------------------------------+
-| SERVICE (service.py)                               |
-| implements input port + calls the output port |
-+-----------------------------------------------+
-      |
-      v
-+-----------------------------------------------+
-| OUTPUT PORT      (ports.py)                             |
-+-----------------------------------------------+
-      |
-      v
-+-----------------------------------------------+
-| REPOSITORY (repository.py)                                  |
-| output adapter implements the output port    |
-+-----------------------------------------------+
++----------------------------------------------------+
+|              WEB UI (web_adapter.py)               |
+|       input adapter calling the input port         |
++----------------------------------------------------+
+                         |
+                         v
++----------------------------------------------------+
+|               INPUT PORT (ports.py)                |
+|                abstract interface                  |
++----------------------------------------------------+
+                         |
+                         v
++----------------------------------------------------+
+|               SERVICE (service.py)                 |
+|    implements input port + calls the output port   |
++----------------------------------------------------+
+                         |
+                         v
++----------------------------------------------------+
+|              OUTPUT PORT (ports.py)                |
+|                abstract interface                  |
++----------------------------------------------------+
+                         |
+                         v
++----------------------------------------------------+
+|        REPOSITORY (repository_adapter.py)          |
+|      output adapter implements the output port     |
++----------------------------------------------------+
 ```
+
+### Code comparison
+
+The code is nearly identical in both architectures—the same business logic, validation, and persistence. The key difference is **how dependencies are managed**:
+
+**WEB UI**
+- **Layered**: Constructor receives `order_service` directly, uses it as a concrete object.
+- **Hexagonal**: Constructor receives `order_port` typed as `OrderInputPort`, an abstract interface. The handler doesn't know (or care) if it's a service, mock, or anything else that implements the port.
+
+**SERVICE**
+- **Layered**: Plain class `OrderService`, depends on a `repository` object passed via constructor.
+- **Hexagonal**: `OrderService` inherits from `OrderInputPort` and declares the repository dependency as `OrderRepositoryPort` type. This makes the contract explicit: "I am an input port" and "I depend on something that is a repository port."
+
+**REPOSITORY**
+- **Layered**: `JsonFileOrderRepository` is a standalone class with no base requirements. It can be used anywhere the code expects it.
+- **Hexagonal**: `JsonFileOrderRepository` inherits from `OrderRepositoryPort` and implements its interface. This makes it a concrete adapter that fulfills a port contract.
+
+**Summary**: Layered is straightforward and pragmatic—it relies on duck typing and direct dependencies. Hexagonal makes boundaries explicit through abstract ports, making it easier to swap implementations, write tests with mocks, and understand the system's contract at a glance.
