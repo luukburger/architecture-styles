@@ -11,3 +11,6 @@ samconfig.toml
 
 # MacOS files
 .DS_Store
+
+# Visual Studio Code settings
+.vscode/
