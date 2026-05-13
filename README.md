@@ -1,19 +1,19 @@
-# Minimal Layered vs Hexagonal Example
+# Minimal Layered vs Hexagonal Architecture example
 
-This repository contains two minimal Python implementations of the same order entry flow:
+## Introduction
+This repository contains two minimal Python implementations of the same application demonstrating the different between two architecture styles:
 
-- `layered/` — classic layered architecture
+- `layered/` — layered architecture
 - `hexagonal/` — hexagonal architecture (ports and adapters)
 
-## Use case
-A single HTML form lets a user:
+## Description of functionality
+A single HTML form which lets a user:
 
-- choose one of 5 products
+- choose one of five fixed products
 - enter a quantity
-- submit an order
-- save the order to a local JSON file
+- submit an order (and save to local JSON file)
 
-## Run the examples
+## Running the examples
 
 ### Layered version
 
