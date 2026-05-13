@@ -37,8 +37,8 @@ Open `http://localhost:8001/` in your browser.
 
 ### Brief theory
 
-- **Layered architecture** organizes the application as a series of levels: presentation → application/use case → infrastructure. Each layer calls the next one down.
-- **Hexagonal architecture** (ports and adapters) puts the business core at the center and defines explicit boundary contracts. The core depends on abstract ports, and concrete adapters plug into those ports.
+- **Layered architecture** organizes the application as a series of levels: presentation → application → infrastructure. Each layer calls the next one down.
+- **Hexagonal architecture** (ports and adapters) puts the application at the center and defines interfaces (ports) at the boundaries of the application. Presentation and infrastructure then plug into these interfaces as adapters.
 
 ### Visual comparison
 
@@ -107,4 +107,6 @@ The code is nearly identical in both architectures—the same business logic, va
 - **Layered**: `JsonFileOrderRepository` is a standalone class with no base requirements. It can be used anywhere the code expects it.
 - **Hexagonal**: `JsonFileOrderRepository` inherits from `OrderRepositoryPort` and implements its interface. This makes it a concrete adapter that fulfills a port contract.
 
-**Summary**: Layered is straightforward and pragmatic—it relies on duck typing and direct dependencies. Hexagonal makes boundaries explicit through abstract ports, making it easier to swap implementations, write tests with mocks, and understand the system's contract at a glance.
+### Summary
+
+Layered is straightforward and pragmatic—it relies on duck typing and direct dependencies. Hexagonal makes boundaries explicit through abstract ports, making it easier to swap implementations, write tests with mocks, and understand the system's contract at a glance.
