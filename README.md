@@ -101,11 +101,11 @@ The code is nearly identical in both architectures—the same business logic, va
 
 **SERVICE**
 - **Layered**: Plain class `OrderService`, depends on a `repository` object passed via constructor.
-- **Hexagonal**: `OrderService` inherits from `OrderInputPort` and declares the repository dependency as `OrderRepositoryPort` type. This makes the contract explicit: "I am an input port" and "I depend on something that is a repository port."
+- **Hexagonal**: `OrderService` inherits from `OrderInputPort` and declares the repository dependency as `OrderPersistencePort` type. This makes the contract explicit: "I am an input port" and "I depend on something that is a repository port."
 
 **REPOSITORY**
 - **Layered**: `JsonFileOrderRepository` is a standalone class with no base requirements. It can be used anywhere the code expects it.
-- **Hexagonal**: `JsonFileOrderRepository` inherits from `OrderRepositoryPort` and implements its interface. This makes it a concrete adapter that fulfills a port contract.
+- **Hexagonal**: `JsonFileOrderRepository` inherits from `OrderPersistencePort` and implements its interface. This makes it a concrete adapter that fulfills a port contract.
 
 ### Summary
 

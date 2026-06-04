@@ -9,7 +9,7 @@ class OrderInputPort(ABC):
         raise NotImplementedError
 
 
-class OrderRepositoryPort(ABC):
+class OrderPersistencePort(ABC):
     @abstractmethod
     def save_order(self, order: Order):
         raise NotImplementedError

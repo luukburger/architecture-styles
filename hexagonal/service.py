@@ -1,9 +1,9 @@
 from domain import Order, find_product
-from ports import OrderInputPort, OrderRepositoryPort
+from ports import OrderInputPort, OrderPersistencePort
 
 
 class OrderService(OrderInputPort):
-    def __init__(self, repository: OrderRepositoryPort):
+    def __init__(self, repository: OrderPersistencePort):
         self.repository = repository
 
     def submit_order(self, product_id, quantity):

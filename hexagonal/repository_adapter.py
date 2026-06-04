@@ -2,10 +2,10 @@ import json
 import os
 
 from domain import Order
-from ports import OrderRepositoryPort
+from ports import OrderPersistencePort
 
 
-class JsonFileOrderRepository(OrderRepositoryPort):
+class JsonFileOrderRepository(OrderPersistencePort):
     def __init__(self, path=None):
         base_dir = os.path.dirname(__file__)
         self.path = path or os.path.join(base_dir, "orders.json")
