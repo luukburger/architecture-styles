@@ -62,7 +62,7 @@ Open `http://localhost:8001/` in your browser.
 **Hexagonal architecture**
 ```
 +----------------------------------------------------+
-|              WEB UI (web_adapter.py)               |
+|           WEB UI (web_input_adapter.py)            |
 |       input adapter calling the input port         |
 +----------------------------------------------------+
                          |
@@ -86,7 +86,7 @@ Open `http://localhost:8001/` in your browser.
                          |
                          v
 +----------------------------------------------------+
-|        REPOSITORY (repository_adapter.py)          |
+|   REPOSITORY (repository_persistance_adapter.py)   |
 |      output adapter implements the output port     |
 +----------------------------------------------------+
 ```
